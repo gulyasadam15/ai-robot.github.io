@@ -10,7 +10,7 @@ async function startStream() {
   robotHost = new URLSearchParams(window.location.search).get("robot-host");
   if (!robotHost) return alert('Hiányzik a robot-host paraméter az URL-ből.');
 
-  const videoUrl = `http://${ip}/video`;
+  const videoUrl = `https://${ip}/video`;
   video.src = videoUrl;
 
   await faceapi.nets.tinyFaceDetector.loadFromUri('./models');
@@ -48,7 +48,7 @@ async function detectFaceLoop() {
 
 function sendCommand(direction) {
   if (!robotHost) return console.error("Robot-host nem elérhető.");
-  fetch(`http://${robotHost}/control`, {
+  fetch(`https://${robotHost}/control`, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain' },
     body: direction
