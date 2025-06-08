@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IP Webcam Vezérlés + Arcfelismerés</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="face-api.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+  <h1>Robot Vezérlés IP Webcam segítségével</h1>
+
+  <input type="text" id="ipInput" placeholder="Add meg a stream IP-jét pl. 192.168.1.10:8080" />
+  <button onclick="startStream()">Indítás</button>
+
+  <div id="videoContainer">
+    <video id="video" autoplay muted></video>
+    <canvas id="overlay"></canvas>
+  </div>
+
+  <div id="controls">
+    <div>
+      <button class="btn" onclick="sendCommand('forward')">⬆️ Fel</button>
+    </div>
+    <div>
+      <button class="btn" onclick="sendCommand('left')">⬅️ Balra</button>
+      <button class="btn" onclick="sendCommand('right')">➡️ Jobbra</button>
+    </div>
+    <div>
+      <button class="btn" onclick="sendCommand('backward')">⬇️ Le</button>
+    </div>
+  </div>
+
+</body>
+</html>
