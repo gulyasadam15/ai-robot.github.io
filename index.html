@@ -5,32 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IP Webcam Vezérlés + Arcfelismerés</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="face-api.min.js"></script>
-    <script src="script.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Robot Vezérlés IP Webcam segítségével</h1>
+  <div class="container">
+    <h1>🤖 IP Webcam Vezérlés + Arcfelismerés</h1>
 
-  <input type="text" id="ipInput" placeholder="Add meg a stream IP-jét pl. 192.168.1.10:8080" />
-  <button onclick="startStream()">Indítás</button>
+    <div class="input-group">
+      <input type="text" id="ipInput" placeholder="Stream IP címe (pl. 192.168.1.10:8080)" />
+      <button onclick="startStream()">Indítás</button>
+    </div>
 
-  <div id="videoContainer">
-    <video id="video" autoplay muted></video>
-    <canvas id="overlay"></canvas>
-  </div>
+    <div class="mode-buttons">
+      <button class="mode-btn active" data-mode="body">Testkövetés</button>
+      <button class="mode-btn" data-mode="face">Arckövetés</button>
+      <button class="mode-btn" data-mode="custom">👨‍💻 Programozó mód</button>
+    </div>
 
-  <div id="controls">
-    <div>
+    <div id="videoContainer">
+      <img id="video" crossorigin="anonymous" />
+      <canvas id="offscreenCanvas" style="display: none;"></canvas>
+      <canvas id="overlay"></canvas>
+    </div>
+
+    <div id="controls">
       <button class="btn" onclick="sendCommand('forward')">⬆️ Fel</button>
-    </div>
-    <div>
-      <button class="btn" onclick="sendCommand('left')">⬅️ Balra</button>
-      <button class="btn" onclick="sendCommand('right')">➡️ Jobbra</button>
-    </div>
-    <div>
+      <div class="middle-controls">
+        <button class="btn" onclick="sendCommand('left')">⬅️ Balra</button>
+        <button class="btn" onclick="sendCommand('right')">➡️ Jobbra</button>
+      </div>
       <button class="btn" onclick="sendCommand('backward')">⬇️ Le</button>
     </div>
-  </div>
 
+    <div id="customCodeContainer" style="display: none;">
+        <h3>👨‍💻 Saját JavaScript kód</h3>
+        
+        <label for="exampleSelect">Példaprogram betöltése:</label>
+        <select id="exampleSelect">
+          <option value="forward2s" selected>➡️ Előre 2 másodpercig</option>
+          <option value="random">🎲 Véletlenszerű mozgás</option>
+          <option value="circle">🔁 Körbe-körbe</option>
+        </select>
+      
+        <textarea id="customCode" placeholder="Ide írhatod a saját JavaScript kódodat..." rows="8"></textarea>
+      
+        <div style="margin-top: 10px;">
+          <button onclick="runCustomCode()">▶️ Futtatás</button>
+          <button onclick="stopCustomCode()">⏹ Leállítás</button>
+        </div>
+      </div>
+  </div>
 </body>
 </html>
